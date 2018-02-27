@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 '''
-Download Percona Live's all slides: just input Percona Live index page, and this program will download all slides!
+Download Percona Live's all slides: just input Percona Live index page, and this program will download all slides
+Requires Python 3.6+ 
+Downloaded slides will be saved on current dir's subdir like this: percona_live_XX_slides
+
+Install:
+    python3 -m pip install percona-slides-downloader
 
 Usage:
     ./percona-slides-downloader.py -u <url> [-t <threads>]
 
 Options:
     -u <url>, the web page
-    -t <threads>, optional, default to 2X cpu cores
+    -t <threads>, optional, default to 100
 
 Examples:
     ./percona-slides-downloader.py -u 'http://www.percona.com/live/17/resources/slides'
@@ -40,7 +45,7 @@ url_index = args['-u']
 #logging.debug(f'args:{args})')
 
 # def var
-workers = 100
+workers = 100 if not args['-t'] else args['-t']
 url_prefix = 'http://www.percona.com'
 href_c = set()
 year = url_index.split('/')[4]
@@ -51,7 +56,7 @@ os.system('mkdir -p ./{dirname}/')
 def get_session_url(url):
     global href_c
     html = requests.get(url, timeout=10).text
-    soup = BeautifulSoup(html, "html.parser")
+    soup = BeautifulSoup(html, "lxml")
     list_a = soup.find_all('a')
     for link in list_a:
         if link.get('href',None):
@@ -64,7 +69,7 @@ def get_session_url(url):
 
 def get_slide(url):
     html = requests.get(url, timeout=10).text
-    soup = BeautifulSoup(html, "html.parser")
+    soup = BeautifulSoup(html, "lxml")
     url_pdf = soup.object['data']
     file_name = url_pdf.split('/')[-1]
     with open(f'./slides/{file_name}', 'wb') as f:
