@@ -1,7 +1,11 @@
 # percona-slides-downloader
 Download Percona Live's all slides: just input Percona Live index page, and this program will download all slides!
-# Install Dependency
+# Install
+```
 python3 -m pip install requests docopt beautifulsoup4
+git clone https://github.com/leafonsword/percona-slides-downloader.git
+cd percona-slides-downloader/
+```
 # Usage:
     ./percona-slides-downloader.py -u <url> [-t <threads>]
 
