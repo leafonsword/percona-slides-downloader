@@ -50,7 +50,7 @@ url_prefix = 'http://www.percona.com'
 href_c = set()
 year = '20' + url_index.split('/')[4]
 dirname = f'percona_live_{year}_slides'
-os.system('mkdir -p ./{dirname}/')
+os.system(f'mkdir -p ./{dirname}/')
 
 
 def get_session_url(url):
@@ -72,7 +72,7 @@ def get_slide(url):
     soup = BeautifulSoup(html, "lxml")
     url_pdf = soup.object['data']
     file_name = url_pdf.split('/')[-1]
-    with open(f'./slides/{file_name}', 'wb') as f:
+    with open(f'./{dirname}/{file_name}', 'wb') as f:
         f.write(requests.get(url_pdf, timeout=10).content)
 
 # main entrance
