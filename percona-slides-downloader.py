@@ -48,7 +48,7 @@ url_index = args['-u']
 workers = 100 if not args['-t'] else args['-t']
 url_prefix = 'http://www.percona.com'
 href_c = set()
-year = url_index.split('/')[4]
+year = '20' + url_index.split('/')[4]
 dirname = f'percona_live_{year}_slides'
 os.system('mkdir -p ./{dirname}/')
 
